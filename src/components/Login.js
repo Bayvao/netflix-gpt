@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidData } from "../utils/Validate";
 
 const Login = () => {
 	const [showCaptchaContent, setShowCaptchaContent] = useState(false);
 	const [showSignIn, setShowSigIn] = useState(true);
+	const [errorMessage, setErrorMessage] = useState();
+
+	const name = useRef(null);
+	const email = useRef(null);
+	const password = useRef(null);
 
 	const handleShowCaptchaContent = () => {
 		setShowCaptchaContent(!showCaptchaContent);
@@ -11,6 +17,21 @@ const Login = () => {
 
 	const toggleSignInForm = () => {
 		setShowSigIn(!showSignIn);
+	};
+
+	const handleButtonClick = () => {
+		// Validate the form data
+
+		const errMsg = checkValidData(
+			showSignIn,
+			!showSignIn ? name.current.value : null,
+			email.current.value,
+			password.current.value,
+		);
+
+		setErrorMessage(errMsg);
+
+		// signin / sign up
 	};
 
 	return (
@@ -22,33 +43,41 @@ const Login = () => {
 					alt="logo"
 				/>
 			</div>
-			<form className="w-3/12 text-white absolute my-36 mx-auto right-0 left-0 p-12 bg-opacity-80 rounded-md bg-black">
-				<h1 className="font-bold text-3xl py-4">
+			<form
+				onSubmit={(e) => e.preventDefault()}
+				className="w-4/12 text-white absolute my-32 mx-auto right-0 left-0 p-12 bg-opacity-80 rounded-md bg-black">
+				<h1 className="font-bold text-2xl py-4">
 					{showSignIn ? "Sign In" : "Sign Up"}
 				</h1>
 				{!showSignIn && (
 					<input
+						ref={name}
 						className="p-4 h-14 my-3 w-full rounded-md bg-gray-700"
 						type="text"
 						placeholder="Full Name"
 					/>
 				)}
 				<input
+					ref={email}
 					className="p-4 h-14 my-3 w-full rounded-md bg-gray-700"
 					type="text"
 					placeholder="Email Address"
 				/>
 				<input
+					ref={password}
 					className="p-4 my-3 h-14 w-full rounded-md bg-gray-700"
 					type="password"
 					placeholder="Password"
 				/>
-				<button className="p-4 my-10 w-full rounded-md bg-red-700">
+				<p className="p-2 text-orange-400">{errorMessage}</p>
+				<button
+					className="p-4 my-10 w-full rounded-md bg-red-700"
+					onClick={handleButtonClick}>
 					{showSignIn ? "Sign In" : "Sign Up"}
 				</button>
 
 				{showSignIn ? (
-					<p className="text-xl my-4">
+					<p className="text-lg my-4">
 						<span className="text-gray-400">New to Netflix? </span>
 						<span
 							className="hover:underline hover:cursor-pointer"
@@ -57,7 +86,7 @@ const Login = () => {
 						</span>
 					</p>
 				) : (
-					<p className="text-xl my-4">
+					<p className="text-lg my-4">
 						<span className="text-gray-400">
 							Already Registered{" "}
 						</span>
@@ -69,7 +98,7 @@ const Login = () => {
 					</p>
 				)}
 
-				<p className="my-4">
+				<p className="my-4 text-xs">
 					<span className="text-gray-400">
 						This page is protected by Google reCAPTCHA to ensure
 						you're not a bot.
