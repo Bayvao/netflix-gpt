@@ -1,20 +1,45 @@
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import IconUser from "../utils/icons/IconUser";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const user = useSelector((store) => store.user);
 	const [isOpen, setIsOpen] = useState(false);
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in
+				const { uid, email, displayName } = user;
+				dispatch(
+					addUser({
+						uid: uid,
+						email: email,
+						displayName: displayName,
+					}),
+				);
+				navigate("/browse");
+			} else {
+				// User is signed out
+				dispatch(removeUser());
+				navigate("/");
+			}
+		});
+
+		// unsubscribe when the component unmounts
+		return () => unsubscribe();
+	}, []);
 
 	const handleSignOut = () => {
 		signOut(auth)
 			.then(() => {
 				// Sign-out successful.
-				navigate("/");
 			})
 			.catch((error) => {
 				// An error happened.
@@ -47,8 +72,7 @@ const Header = () => {
 									<div className="flex">
 										<IconUser name="Account" />
 										<span className="mx-4 pb-1">
-											{" "}
-											Account{" "}
+											Account
 										</span>
 									</div>
 								</button>
