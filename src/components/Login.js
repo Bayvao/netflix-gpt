@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/Validate";
+import {
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
 	const [showCaptchaContent, setShowCaptchaContent] = useState(false);
@@ -31,7 +36,43 @@ const Login = () => {
 
 		setErrorMessage(errMsg);
 
+		if (errMsg) return;
+
 		// signin / sign up
+		if (!showSignIn) {
+			//  sign up
+			createUserWithEmailAndPassword(
+				auth,
+				email.current.value,
+				password.current.value,
+			)
+				.then((userCredential) => {
+					const user = userCredential.user;
+					console.log(user);
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					setErrorMessage(errorCode + " - " + errorMessage);
+				});
+		} else {
+			// signin
+			signInWithEmailAndPassword(
+				auth,
+				email.current.value,
+				password.current.value,
+			)
+				.then((userCredential) => {
+					const user = userCredential.user;
+					console.log(user);
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					if (errorCode === "auth/invalid-login-credentials") {
+						setErrorMessage("Invalid Credentials");
+					}
+				});
+		}
 	};
 
 	return (
