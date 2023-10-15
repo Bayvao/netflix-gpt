@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import IconUser from "../utils/icons/IconUser";
 import { addUser, removeUser } from "../utils/userSlice";
+import { AVATAR_URL, LOGO_URL } from "../utils/constants";
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -50,11 +51,7 @@ const Header = () => {
 
 	return (
 		<div className="absolute place-items-center w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
-			<img
-				className="w-44"
-				src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
-				alt="logo"
-			/>
+			<img className="w-44" src={LOGO_URL} alt="logo" />
 			{user && (
 				<div
 					className="flex p-2"
@@ -63,7 +60,7 @@ const Header = () => {
 					<img
 						className="w-12 h-12"
 						alt="user-icon"
-						src="https://occ-0-2461-3647.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABXvHfQy06KCq87W959_ASfZ78T-34XjYXvXndSdD6n9DKjeKaMooe7LiYFm2kVFFtB_wH6sT4g_5TC1cDFHso1g86IUDq10.png?r=962"
+						src={AVATAR_URL}
 					/>
 					{isOpen && (
 						<div className="absolute right-6 z-10 mt-4 w-48 top-16 origin-top-right bg-black py-2 mx-4 focus:outline-none">

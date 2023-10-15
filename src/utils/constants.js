@@ -1,0 +1,19 @@
+export const LOGO_URL =
+	"https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
+
+export const AVATAR_URL =
+	"https://occ-0-2461-3647.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABXvHfQy06KCq87W959_ASfZ78T-34XjYXvXndSdD6n9DKjeKaMooe7LiYFm2kVFFtB_wH6sT4g_5TC1cDFHso1g86IUDq10.png?r=962";
+
+export const API_OPTIONS = {
+	method: "GET",
+	headers: {
+		accept: "application/json",
+		Authorization:
+			"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwMDk2ODVjNDZhMWU1YjhmODA4YjJkODdmNDIyMDA4NSIsInN1YiI6IjY1MmFlYmU1ZWE4NGM3MDEwYzFiYWNhZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0Svj6Lvm9jfTgfzKHEfzSbn7d3g0P_NVpRhnrW9T644",
+	},
+};
+
+export const NOW_PLAYING_MOVIES_API =
+	"https://api.themoviedb.org/3/movie/now_playing?page=1";
+
+export const YOUTUBE_EMBED_URL = "https://www.youtube.com/embed/";
