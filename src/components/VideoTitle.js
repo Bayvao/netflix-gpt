@@ -26,7 +26,7 @@ const VideoTitle = ({ title, overview }) => {
           >
             <div className="flex items-center">
               <IconInfo />
-              <span className="ml-1">More Info</span>
+              <span className="ml-1 font-medium">More Info</span>
             </div>
           </button>
         </div>
