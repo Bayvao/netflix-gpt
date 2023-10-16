@@ -5,15 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import IconUser from "../utils/icons/IconUser";
 import { addUser, removeUser } from "../utils/userSlice";
-import { AVATAR_URL, LOGO_URL } from "../utils/constants";
+import { AVATAR_URL, LOGO_URL, SUPPORTED_LANGUAGES } from "../utils/constants";
 import IconHelp from "../utils/icons/IconHelp";
 import IconLogout from "../utils/icons/IconLogout";
+import { toggleGPTSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/langConfigSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   const [isOpen, setIsOpen] = useState(false);
+
+  const showGPTSearch = useSelector((store) => store.gpt.showGPTSearch);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -51,16 +55,49 @@ const Header = () => {
       });
   };
 
+  const handleGPTSearch = () => {
+    //Toggle GPT Search
+    dispatch(toggleGPTSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    //Toggle GPT Search
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className="absolute place-items-center w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
       <img className="w-44" src={LOGO_URL} alt="logo" />
       {user && (
-        <div
-          className="flex p-2"
-          onMouseOver={() => setIsOpen((prev) => !prev)}
-          onMouseOut={() => setIsOpen((prev) => !prev)}
-        >
-          <img className="w-12 h-12" alt="user-icon" src={AVATAR_URL} />
+        <div className="flex p-2">
+          {showGPTSearch && (
+            <select
+              className="py-2 px-3 mx-3 my-2 bg-red-800 text-white rounded-md"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((language) => (
+                <option
+                  className="bg-black text-white"
+                  key={language.identifier}
+                  value={language.identifier}
+                >
+                  {language.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="py-2 px-3 mx-3 my-2 bg-red-800 text-white rounded-md"
+            onClick={handleGPTSearch}
+          >
+            <span>{showGPTSearch ? "Home" : "GPT Search"}</span>
+          </button>
+          <div
+            onMouseOver={() => setIsOpen((prev) => !prev)}
+            onMouseOut={() => setIsOpen((prev) => !prev)}
+          >
+            <img className="w-12 h-12" alt="user-icon" src={AVATAR_URL} />
+          </div>
           {isOpen && (
             <div className="absolute right-6 z-10 mt-4 w-48 top-16 origin-top-right bg-black py-2 mx-4 focus:outline-none">
               <div className="flex flex-col w-full justify-between hover:cursor-pointer">
