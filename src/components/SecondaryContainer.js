@@ -9,7 +9,7 @@ const SecondaryContainer = () => {
   return (
     movies && (
       <div className="bg-black bg-opacity-95 w-[1280px]">
-        <div className="-mt-36 pl-6 relative z-20">
+        <div className="-mt-40 pl-6 relative z-20">
           {movieSection?.map((movie) => (
             <MovieList
               title={movies?.[movie]?.type}
