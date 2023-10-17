@@ -66,8 +66,8 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute place-items-center w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between">
-      <img className="w-44" src={LOGO_URL} alt="logo" />
+    <div className="absolute place-items-center w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+      <img className="w-44 mx-auto md:mx-0" src={LOGO_URL} alt="logo" />
       {user && (
         <div className="flex p-2">
           {showGPTSearch && (
@@ -92,14 +92,11 @@ const Header = () => {
           >
             <span>{showGPTSearch ? "Home" : "GPT Search"}</span>
           </button>
-          <div
-            onMouseOver={() => setIsOpen((prev) => !prev)}
-            onMouseOut={() => setIsOpen((prev) => !prev)}
-          >
+          <div onClick={() => setIsOpen((prev) => !prev)}>
             <img className="w-12 h-12" alt="user-icon" src={AVATAR_URL} />
           </div>
           {isOpen && (
-            <div className="absolute right-6 z-10 mt-4 w-48 top-16 origin-top-right bg-black py-2 mx-4 focus:outline-none">
+            <div className="absolute right-6 z-10 mt-4 w-48 top-32 md:top-16 origin-top-right bg-black py-2 mx-4 focus:outline-none">
               <div className="flex flex-col w-full justify-between hover:cursor-pointer">
                 <button className=" text-white text-left px-3 my-2 text-sm ">
                   <div className="flex">
