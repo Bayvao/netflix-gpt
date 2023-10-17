@@ -87,7 +87,7 @@ const Login = () => {
         password.current.value
       )
         .then((userCredential) => {
-          const user = userCredential.user;
+          //success
         })
         .catch((error) => {
           const errorCode = error.code;
