@@ -9,7 +9,7 @@ const VideoTitle = ({ title, overview }) => {
       <p className="hidden md:inline-block py-6 text-md w-1/2 opacity-70">
         {overview}
       </p>
-      <div className="flex items-center mt-14">
+      <div className="flex items-center mt-24">
         <div className="my-1 md:my-0">
           <button
             className="bg-white text-black 
