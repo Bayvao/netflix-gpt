@@ -46,3 +46,6 @@ export const SUPPORTED_LANGUAGES = [
     name: "Spanish",
   },
 ];
+
+export const OPEN_API_KEY =
+  "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";
